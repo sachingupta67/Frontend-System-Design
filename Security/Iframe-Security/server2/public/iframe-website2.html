@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Malicious Iframe</title>
+</head>
+<body>
+    <h1>Malicious Iframe</h1>
+    <p>This iframe attempts to steal data from the parent window</p>
+    <script>
+        window.alert('Hi');
+        // Malicious JS code in iframe
+        window.onload=function(){
+            try{
+                const parentWindow= window.parent;
+                const parentDocument = parentWindow.document // here cookie and session also can be stolen
+
+                // attempt to read the html
+                const stoleData= parentDocument.innerHTML
+                alert("Stolen Data",stoleData)
+
+            }
+            catch(err){
+                console.log(`Data theft failed: ${err}`)
+
+            }
+        }
+    </script>
+</body>
+</html>

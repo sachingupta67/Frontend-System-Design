@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Short Polling</title>
+  </head>
+
+  <body>
+    <h1>Short Polling</h1>
+    <div id="data-container"></div>
+    <script>
+      async function getData() {
+        try {
+          let res = await fetch("/getData");
+          const { data } = await res.json();
+          console.log("data", data);
+          document.getElementById("data-container").innerHTML = data;
+        } catch (err) {
+          //
+        }
+      }
+      let intervalId;
+      
+      function shortPolling() {
+        intervalId= setInterval(() => {
+          getData(); // will keep asking for data from server , to check if its updated or not in every 5 Sec
+        }, 5000);
+      }
+      shortPolling();
+
+      // Navigation or User Action or target Condition | Clear your interval in short polling
+    //   clearInterval(intervalId)
+    </script>
+  </body>
+</html>
